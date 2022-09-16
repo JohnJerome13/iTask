@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+@import "theme/default/styles/themeStyles.scss";
+// @import "theme/dark/styles/themeStyles.scss";
+// @import "theme/light/styles/themeStyles.scss";
+
+/**
+ * Modules
+ */
+@import "resources/user/userGlobalStyles";
+
+
+@import "resources/task/taskGlobalStyles";
+
+
+@import "resources/flow/flowGlobalStyles";
+@import "resources/note/noteGlobalStyles";
