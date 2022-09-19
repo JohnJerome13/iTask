@@ -24,89 +24,82 @@ import FlowLayout from '../components/FlowLayout.js.jsx';
 import FlowListItem from '../components/FlowListItem.js.jsx';
 
 class FlowList extends Binder {
-  constructor(props) {
-    super(props);
-  }
+	constructor(props) {
+		super(props);
+	}
 
-  componentDidMount() {
-    // fetch a list of your choice
-    this.props.dispatch(flowActions.fetchListIfNeeded('all')); // defaults to 'all'
-  }
+	componentDidMount() {
+		// fetch a list of your choice
+		this.props.dispatch(flowActions.fetchListIfNeeded('all')); // defaults to 'all'
+	}
 
-  render() {
-    const { flowStore } = this.props;
+	render() {
+		const { flowStore } = this.props;
 
-    /**
-     * Retrieve the list information and the list items for the component here.
-     *
-     * NOTE: if the list is deeply nested and/or filtered, you'll want to handle
-     * these steps within the mapStoreToProps method prior to delivering the
-     * props to the component.  Othwerwise, the render() action gets convoluted
-     * and potentially severely bogged down.
-     */
+		/**
+		 * Retrieve the list information and the list items for the component here.
+		 *
+		 * NOTE: if the list is deeply nested and/or filtered, you'll want to handle
+		 * these steps within the mapStoreToProps method prior to delivering the
+		 * props to the component.  Othwerwise, the render() action gets convoluted
+		 * and potentially severely bogged down.
+		 */
 
-    // get the flowList meta info here so we can reference 'isFetching'
-    const flowList = flowStore.lists ? flowStore.lists.all : null;
+		// get the flowList meta info here so we can reference 'isFetching'
+		const flowList = flowStore.lists ? flowStore.lists.all : null;
 
-    /**
-     * use the reducer getList utility to convert the all.items array of ids
-     * to the actual flow objetcs
-     */
-    const flowListItems = flowStore.util.getList("all");
+		/**
+		 * use the reducer getList utility to convert the all.items array of ids
+		 * to the actual flow objetcs
+		 */
+		const flowListItems = flowStore.util.getList('all');
 
-    /**
-     * NOTE: isEmpty is is usefull when the component references more than one
-     * resource list.
-     */
-    const isEmpty = (
-      !flowListItems
-      || !flowList
-    );
+		/**
+		 * NOTE: isEmpty is is usefull when the component references more than one
+		 * resource list.
+		 */
+		const isEmpty = !flowListItems || !flowList;
 
-    const isFetching = (
-      !flowListItems
-      || !flowList
-      || flowList.isFetching
-    )
+		const isFetching = !flowListItems || !flowList || flowList.isFetching;
 
-    return (
-      <FlowLayout>
-        <h1> Flow List </h1>
-        <hr/>
-        <Link to={'/flows/new'}> New Flow </Link>
-        <br/>
-        { isEmpty ?
-          (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
-          :
-          <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <ul>
-              {flowListItems.map((flow, i) =>
-                <FlowListItem key={flow._id + i} flow={flow} />
-              )}
-            </ul>
-          </div>
-        }
-      </FlowLayout>
-    )
-  }
+		return (
+			<FlowLayout>
+				<h1> Flow List </h1>
+				<hr />
+				<Link to={'/flows/new'}> New Flow </Link>
+				<br />
+				{isEmpty ? (
+					isFetching ? (
+						<h2>Loading...</h2>
+					) : (
+						<h2>Empty.</h2>
+					)
+				) : (
+					<div style={{ opacity: isFetching ? 0.5 : 1 }}>
+						<ul>
+							{flowListItems.map((flow, i) => (
+								<FlowListItem key={flow._id + i} flow={flow} />
+							))}
+						</ul>
+					</div>
+				)}
+			</FlowLayout>
+		);
+	}
 }
 
 FlowList.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
+	dispatch: PropTypes.func.isRequired,
+};
 
 const mapStoreToProps = (store) => {
-  /**
-  * NOTE: Yote refer's to the global Redux 'state' as 'store' to keep it mentally
-  * differentiated from the React component's internal state
-  */
-  return {
-    flowStore: store.flow
-  }
-}
+	/**
+	 * NOTE: Yote refer's to the global Redux 'state' as 'store' to keep it mentally
+	 * differentiated from the React component's internal state
+	 */
+	return {
+		flowStore: store.flow,
+	};
+};
 
-export default withRouter(
-  connect(
-    mapStoreToProps
-  )(FlowList)
-);
+export default withRouter(connect(mapStoreToProps)(FlowList));

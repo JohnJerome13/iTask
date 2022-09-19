@@ -6,9 +6,18 @@
 
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
+require('dotenv').config()
 
 const secrets = require('./secrets.js');
-
+const envSecrets = secrets[process.env.NODE_ENV];
+console.log(process.env)
+console.log(process.env)
+console.log(process.env)
+console.log(process.env)
+console.log(process.env)
+console.log(process.env)
+console.log(process.env)
+console.log(process.env)
 /**
  * NOTE: urls should omit http(s)://
  */
@@ -26,11 +35,13 @@ const productionDbName = "iTask";
 const remoteDb = process.env.REMOTE_DB ? process.env.REMOTE_DB : false;
 
 // set database uri's
+// const devDbUri = `mongodb://localhost/${devDbName}`
 const devDbUri = `mongodb://localhost/${devDbName}`
 const stagingDbUri = devDbUri;
 // const stagingDbUri = `mongodb+srv://${envSecrets.mongo_user}:${envSecrets.mongo_pass}@${envSecrets.mongo_prefix}.gcp.mongodb.net/${productionDbName}`
-const productionDbUri = devDbUri;
-// const productionDbUri = `mongodb+srv://${envSecrets.mongo_user}:${envSecrets.mongo_pass}@${envSecrets.mongo_prefix}.gcp.mongodb.net/${productionDbName}`
+// const productionDbUri = devDbUri;
+// const productionDbUri = `mongodb+srv://${secrets.mongo_user}:${secrets.mongo_pass}@${secrets.mongo_prefix}.6fji1.mongodb.net/${productionDbName}`
+const productionDbUri = process.env.MONGO_URI
 
 
 

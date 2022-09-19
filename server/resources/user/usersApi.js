@@ -128,7 +128,7 @@ module.exports = function(router, requireLogin, requireRole) {
   router.post('/api/users'              , requireRole('admin'), users.create); // create without login
 
   // - Read
-  router.get('/api/users'               , requireRole('admin'), users.list); // must be an 'admin' to see the list of users
+  router.get('/api/users'               , requireLogin(), users.list); 
   router.get('/api/users/by-:refKey/:refId*'  , requireRole('admin'), users.listByRefs);
   router.get('/api/users/by-:refKey-list'    , requireRole('admin'), users.listByValues);
   router.get('/api/users/get-logged-in' , requireLogin(), users.getLoggedInUser);
