@@ -6,18 +6,10 @@
 
 const path = require('path');
 const rootPath = path.normalize(__dirname + '/../../');
-require('dotenv').config()
 
 const secrets = require('./secrets.js');
 const envSecrets = secrets[process.env.NODE_ENV];
-console.log(process.env)
-console.log(process.env)
-console.log(process.env)
-console.log(process.env)
-console.log(process.env)
-console.log(process.env)
-console.log(process.env)
-console.log(process.env)
+
 /**
  * NOTE: urls should omit http(s)://
  */
